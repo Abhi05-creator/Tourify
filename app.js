@@ -43,9 +43,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use("/api/v1/tours", tourRouter)
 app.use("/api/v1/users", userRouter)
 
-app.all(/(.*)/,(req,res,next)=>{
-    next(new AppError(`cant find ${req.originalUrl}`,404))
-})
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.all('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+});
 
 
 
