@@ -45,7 +45,7 @@ app.use("/api/v1/users", userRouter)
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
-app.all('*', (req, res) => {
+app.all(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 });
 

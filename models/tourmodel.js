@@ -5,9 +5,16 @@ const tourSchema = new mongoose.Schema({
     name: {
         type: String,
         unique: true,
-        required: [true,"the tour name should be present"],
-        maxlength:[40,'A tour name must have less or equal then 40 characters'],
-        minlength:[10,"it should have minimum 10 characters" ]
+        required: [true, 'A tour must have a name'],
+        maxlength: [100, 'A tour name must have less or equal than 100 characters'],
+        validate: {
+            validator: function(val) {
+                // Rule: Lowercase, letters, digits, '.', '_', '-' only. No '---'.
+                const regex = /^(?![ \s\S]*---)[a-z0-9._-]{1,100}$/;
+                return regex.test(val);
+            },
+            message: 'Project names must be lowercase, max 100 chars, and can only contain letters, digits, ".", "_", or "-". They cannot contain the sequence "---".'
+        }
     },
     slug: String,
     duration: {
