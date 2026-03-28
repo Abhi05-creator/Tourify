@@ -2,21 +2,28 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-// Maps tour names to locally generated images
+// Maps tour names to locally generated images (using lowercase keys to match DB)
 const TOUR_IMAGES = {
-  'The Forest Hiker': '/tour-forest-hiker.png',
-  'The Sea Explorer': '/tour-sea-explorer.png',
-  'Snow World': '/tour-snow-adventure.png',
-  'The City Wanderer': '/tour-city-wanderer.png',
-  'The Park Camper': '/tour-park-camper.png',
-  'The Sports Lover': '/tour-sports-lover.png',
-  'The Wine Taster': 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800',
-  'Taj Mahal': 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=800',
-  'Eiffel Tower': 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800',
-  'The Great Pyramids': 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=800',
+  'the-forest-hiker': '/tour-forest-hiker.png',
+  'the-sea-explorer': '/tour-sea-explorer.png',
+  'snow-world': '/tour-snow-adventure.png',
+  'the-city-wanderer': '/tour-city-wanderer.png',
+  'the-park-camper': '/tour-park-camper.png',
+  'the-sports-lover': '/tour-sports-lover.png',
+  'the-wine-taster': 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=800',
+  'taj-mahal': 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&q=80&w=800',
+  'eiffel-tower': 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&q=80&w=800',
+  'the-great-pyramids': 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=800',
 };
 
-const getImage = (name) => TOUR_IMAGES[name] || 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?auto=format&fit=crop&q=80&w=800';
+const getImage = (tour) => {
+  // 1. Try local mapping by name
+  if (TOUR_IMAGES[tour.name]) return TOUR_IMAGES[tour.name];
+  // 2. Try raw imageCover from DB
+  if (tour.imageCover) return tour.imageCover.startsWith('http') ? tour.imageCover : `/${tour.imageCover}`;
+  // 3. Fallback
+  return 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?auto=format&fit=crop&q=80&w=800';
+};
 
 export default function Home() {
   const [tours, setTours] = useState([]);
@@ -98,7 +105,7 @@ export default function Home() {
             <div className="card" key={tour._id}>
               {/* Fallback to online image if local not found via public */}
               <img 
-                src={getImage(tour.name)}
+                src={getImage(tour)}
                 alt={tour.name} 
                 className="card-img" 
               />
