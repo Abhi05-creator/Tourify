@@ -48,7 +48,7 @@ app.use("/api/v1/users", userRouter)
 if (!process.env.VERCEL) {
     const path = require('path');
     app.use(express.static(path.join(__dirname, 'frontend/dist')));
-    app.all('(.*)', (req, res) => {
+    app.all(/.*/, (req, res) => {
         res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
     });
 }
