@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import TourDetail from './pages/TourDetail';
 import './index.css';
 
@@ -16,7 +17,10 @@ function App() {
           {token ? (
             <span style={{ marginLeft: '1rem', color: 'var(--primary)', fontWeight: 600 }}>Logged In</span>
           ) : (
-            <Link to="/login" className="btn btn-outline" style={{ marginLeft: '1rem', padding: '0.5rem 1rem' }}>Log In</Link>
+            <>
+              <Link to="/login" style={{ marginLeft: '1rem', color: 'var(--text)', fontWeight: 500 }}>Log In</Link>
+              <Link to="/signup" className="btn btn-outline" style={{ marginLeft: '1rem', padding: '0.4rem 0.8rem' }}>Sign Up</Link>
+            </>
           )}
         </div>
       </nav>
@@ -25,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/tour/:id" element={<TourDetail />} />
         </Routes>
       </main>
