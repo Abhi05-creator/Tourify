@@ -2,13 +2,13 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/dist/$1"
     }
   ],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "frontend/dist/**"
-    }
-  }
+  "cleanUrls": true
 }
