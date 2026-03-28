@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <nav className="nav">
-        <Link to="/" className="nav-brand">Natours</Link>
+        <Link to="/" className="nav-brand">Tourify</Link>
         <div className="nav-links">
           <Link to="/">All Tours</Link>
           {token ? (

@@ -7,8 +7,6 @@ const globalHandler = require('./controllers/errorController')
 const AppError = require('./utils/AppError')
 const rateLimiter=require("express-rate-limit")
 const helmet=require("helmet")
-const datasanitize=require("express-mongo-sanitize")
-
 app.use(helmet())
 
 app.use(express.json())
@@ -20,8 +18,6 @@ const limit=rateLimiter({
 })
 
 app.use("/api",limit)
-
-app.use(datasanitize())
 
 
 

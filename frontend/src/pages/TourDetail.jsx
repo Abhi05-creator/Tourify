@@ -22,7 +22,7 @@ export default function TourDetail() {
   useEffect(() => {
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/v1/tours/${id}`);
+        const response = await axios.get(`/api/v1/tours/${id}`);
         setTour(response.data.data.tour);
       } catch (err) {
         console.error('Error fetching tour:', err);
