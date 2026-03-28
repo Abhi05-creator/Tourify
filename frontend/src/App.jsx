@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import TourDetail from './pages/TourDetail';
+import Footer from './components/Footer';
 import './index.css';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
         </div>
       </nav>
       
-      <main>
+      <main style={{ minHeight: 'calc(100vh - 80px)' }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -33,6 +34,8 @@ function App() {
           <Route path="/tour/:id" element={<TourDetail />} />
         </Routes>
       </main>
+
+      <Footer />
     </Router>
   );
 }
