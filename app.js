@@ -43,15 +43,11 @@ if (process.env.NODE_ENV === 'development') {
 app.use("/api/v1/tours", tourRouter)
 app.use("/api/v1/users", userRouter)
 
-// ONLY serve static files through Express when NOT on Vercel
-// Vercel will handle serving the React frontend through its own static hosting
-if (!process.env.VERCEL) {
-    const path = require('path');
-    app.use(express.static(path.join(__dirname, 'frontend/dist')));
-    app.all(/.*/, (req, res) => {
-        res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
-    });
-}
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+});
 
 
 
