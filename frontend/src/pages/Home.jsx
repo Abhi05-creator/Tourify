@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 // Maps tour names to locally generated images (using lowercase keys to match DB)
+// Maps tour names to specific fallback/external images
 const TOUR_IMAGES = {
   'the-forest-hiker': '/tour-forest-hiker.png',
   'the-sea-explorer': '/tour-sea-explorer.png',
@@ -17,11 +18,14 @@ const TOUR_IMAGES = {
 };
 
 const getImage = (tour) => {
-  // 1. Try local mapping by name
-  if (TOUR_IMAGES[tour.name]) return TOUR_IMAGES[tour.name];
-  // 2. Try raw imageCover from DB
-  if (tour.imageCover) return tour.imageCover.startsWith('http') ? tour.imageCover : `/${tour.imageCover}`;
-  // 3. Fallback
+  const name = tour.name ? tour.name.toLowerCase() : '';
+  // 1. Try raw imageCover from DB first (since we just migrated it)
+  if (tour.imageCover) {
+     return tour.imageCover.startsWith('http') ? tour.imageCover : `/${tour.imageCover}`;
+  }
+  // 2. Try mapping by normalized name
+  if (TOUR_IMAGES[name]) return TOUR_IMAGES[name];
+  // 3. Absolute Fallback
   return 'https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?auto=format&fit=crop&q=80&w=800';
 };
 
