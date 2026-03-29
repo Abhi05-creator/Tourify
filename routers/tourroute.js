@@ -23,11 +23,11 @@ router.route('/monthly-tours').get(tourController.monthlyPlan)
 
 router.route('/:id')
     .get(tourController.getTour)
-    .patch(authenticateuser.protect, tourController.tourUpdate)
+    .patch(authenticateuser.protect, authenticateuser.authorize, tourController.tourUpdate)
     .delete(authenticateuser.protect, authenticateuser.authorize, tourController.deltour)
 
 router.route('/')
     .get(tourController.getAlltours)
-    .post(authenticateuser.protect, tourController.createTour)
+    .post(authenticateuser.protect, authenticateuser.authorize, tourController.createTour)
 
 module.exports = router
