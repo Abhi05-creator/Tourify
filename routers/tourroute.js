@@ -18,10 +18,12 @@ const tourController = require('../controllers/tourController')
 
 
 
+router.use(authenticateuser.protect)
+
 router.route('/tour-stats').get(tourController.tourStats)
 router.route('/monthly-tours').get(tourController.monthlyPlan)
 
-router.route('/:id').patch(tourController.tourUpdate).get(tourController.getTour).delete(authenticateuser.protect,authenticateuser.authorize,tourController.deltour)
+router.route('/:id').patch(tourController.tourUpdate).get(tourController.getTour).delete(authenticateuser.authorize, tourController.deltour)
 
 router.route("/").get(tourController.getAlltours).post(tourController.createTour)
 
