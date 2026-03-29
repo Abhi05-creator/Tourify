@@ -17,6 +17,8 @@ const TOUR_IMAGES = {
   'the-great-pyramids': 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=800',
 };
 
+const formatName = (name) => name.replace(/-/g, ' ').toUpperCase();
+
 const getImage = (tour) => {
   const name = tour.name ? tour.name.toLowerCase() : '';
   // 1. Try raw imageCover from DB first (since we just migrated it)
@@ -118,7 +120,7 @@ export default function Home() {
                   <span>{tour.difficulty} {tour.duration}-day tour</span>
                   <span>{tour.ratingsAverage} ⭐ ({tour.ratingsQuantity})</span>
                 </div>
-                <h3 className="card-title">{tour.name}</h3>
+                <h3 className="card-title">{formatName(tour.name)}</h3>
                 <p style={{color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1.5rem'}}>
                   {tour.summary}
                 </p>

@@ -53,7 +53,7 @@ a {
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  background: linear-gradient(135deg, var(--primary), #00b8ff);
+  background: linear-gradient(135deg, #FF6B6B, #FF8E53);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

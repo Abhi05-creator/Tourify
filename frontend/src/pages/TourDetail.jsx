@@ -16,6 +16,8 @@ const TOUR_IMAGES = {
   'the-great-pyramids': 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&q=80&w=800',
 };
 
+const formatName = (name) => name.replace(/-/g, ' ').toUpperCase();
+
 const getImage = (tour) => {
   const name = tour.name ? tour.name.toLowerCase() : '';
   if (tour.imageCover && tour.imageCover.startsWith('http')) return tour.imageCover;
@@ -59,7 +61,7 @@ export default function TourDetail() {
           <div className="hero-badge" style={{ background: 'rgba(255,255,255,0.1)', color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>
             Featured Experience
           </div>
-          <h1>{tour.name}</h1>
+          <h1>{formatName(tour.name)}</h1>
           <p style={{ maxWidth: '800px', margin: '0 0 2rem' }}>{tour.summary}</p>
         </div>
       </section>
