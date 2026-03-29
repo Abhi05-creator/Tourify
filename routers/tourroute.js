@@ -22,7 +22,7 @@ router.route('/tour-stats').get(tourController.tourStats)
 router.route('/monthly-tours').get(tourController.monthlyPlan)
 
 router.route('/:id')
-    .get(tourController.getTour)
+    .get(authenticateuser.protect, tourController.getTour)
     .patch(authenticateuser.protect, authenticateuser.authorize, tourController.tourUpdate)
     .delete(authenticateuser.protect, authenticateuser.authorize, tourController.deltour)
 

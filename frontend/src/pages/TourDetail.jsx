@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// Maps tour names to specific fallback/external images (sync with Home.jsx)
 const TOUR_IMAGES = {
   'the-forest-hiker': '/tour-forest-hiker.png',
   'the-sea-explorer': '/tour-sea-explorer.png',
@@ -28,29 +27,43 @@ const getImage = (tour) => {
 
 export default function TourDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
     const fetchTour = async () => {
       try {
-        const response = await axios.get(`/api/v1/tours/${id}`);
+        const response = await axios.get(`/api/v1/tours/${id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         setTour(response.data.data.tour);
       } catch (err) {
         console.error('Error fetching tour:', err);
+        if (err.response?.status === 401) {
+          localStorage.removeItem('jwt');
+          navigate('/login');
+        }
       } finally {
         setLoading(false);
       }
     };
+
     window.scrollTo(0, 0);
     fetchTour();
-  }, [id]);
+  }, [id, navigate]);
 
   if (loading) return <div className="spinner"></div>;
   if (!tour) return (
     <div className="container" style={{marginTop: '8rem', textAlign: 'center', minHeight: '60vh'}}>
       <h2>Tour not found.</h2>
-      <Link to="/" className="btn" style={{marginTop:'2rem'}}>Go Back to Exploration</Link>
+      <Link to="/" className="btn" style={{marginTop:'2rem'}}>Back to All Tours</Link>
     </div>
   );
 
@@ -70,7 +83,7 @@ export default function TourDetail() {
         <div className="detail-grid">
           <main className="detail-main">
             <img src={getImage(tour)} alt={tour.name} className="detail-img" />
-            
+
             <div className="detail-body">
               <h2 className="detail-section-title"><span>📍</span> Quick Facts</h2>
               <div className="info-card-grid">
@@ -92,24 +105,24 @@ export default function TourDetail() {
                 </div>
               </div>
 
-              <h2 className="detail-section-title"><span>📖</span> Description</h2>
-              <p style={{ fontSize: '1.125rem', color: 'var(--text-muted)', whiteSpace: 'pre-line' }}>
-                {tour.description}
+              <h2 className="detail-section-title"><span>📖</span> About This Tour</h2>
+              <p style={{ fontSize: '1.125rem', color: 'var(--text-muted)', whiteSpace: 'pre-line', lineHeight: '1.8' }}>
+                {tour.description || 'Full details for this experience are being crafted. Check back soon.'}
               </p>
             </div>
           </main>
 
           <aside>
             <div className="booking-card">
-              <h3>Start your journey</h3>
+              <h3>Secure your spot</h3>
               <div className="booking-price">
                 ${tour.price} <span>/ person</span>
               </div>
               <button className="btn" style={{ width: '100%', padding: '1.25rem', fontSize: '1.125rem' }}>
-                Reserve This Tour
+                Book This Tour
               </button>
               <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                Free cancellation up to 48 hours before the start date.
+                Free cancellation up to 48 hours before departure.
               </p>
             </div>
           </aside>
@@ -118,4 +131,3 @@ export default function TourDetail() {
     </div>
   );
 }
-
