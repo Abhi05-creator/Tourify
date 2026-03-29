@@ -1,51 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tourify - Tour Booking Application</title>
-    <style>
-        /* CSS styles for Tourify application */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-        /* More styles */
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Welcome to Tourify</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>Book Your Tour Now!</h2>
-        <form>
-            <label for="tour-name">Tour Name:</label>
-            <input type="text" id="tour-name" name="tour-name" required>
-            <button type="submit">Book Now!</button>
-        </form>
-        <div id="tour-list">
-            <!-- Dynamic tour list will be populated here -->
-        </div>
-    </main>
-    <script>
-        // JavaScript functionality for Tourify application
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const tourName = document.getElementById('tour-name').value;
-            alert('Tour ' + tourName + ' booked!');
-        });
-        // More JS functionality
-    </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tourify - Discover Your Next Adventure</title>
+    <script type="module" crossorigin src="/assets/index-DjGpPoJi.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BnzkuRCt.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>

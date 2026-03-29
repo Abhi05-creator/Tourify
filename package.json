@@ -7,8 +7,9 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "vercel-build": "npm install --prefix frontend && npm run build --prefix frontend"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
